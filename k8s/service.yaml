@@ -1,13 +1,18 @@
-apiVersion: v1
-kind: Service
+apiVersion: v1        # Kubernetes API version used to create this resource (v1 = core API group)
+
+kind: Service         # Defines this resource as a Service (used to expose pods)
+
 metadata:
-  name: flask-service
-  namespace: poc-namespace
+  name: flask-service         # Name of the Service (used to reference it inside cluster)
+  namespace: poc-namespace    # Namespace where this Service is created
+
 spec:
-  type: NodePort
+  type: NodePort              # Exposes the service on a static port on each node (external access)
+
   selector:
-    app: flask-app
+    app: flask-app            # Matches pods having label app=flask-app (connects service to pods)
+
   ports:
-    - port: 80
-      targetPort: 5000
-      nodePort: 30007
+    - port: 80                # Port on which the Service is exposed inside the cluster
+      targetPort: 5000        # Port on the container (Flask app runs on 5000)
+      nodePort: 30007         # External port on node (used to access app from browser)
